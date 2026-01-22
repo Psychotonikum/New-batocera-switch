@@ -280,6 +280,23 @@ def list_sdl_gamepads(sdlversion):
     sdl2.SDL_Quit()
 
     return sdl_devices
+
+def read_file_lower(path):
+    try:
+        return pathlib.Path(path).read_text().strip().lower()
+    except FileNotFoundError:
+        return ""
+
+def is_steamdeck():
+    pname = read_file_lower("/sys/class/dmi/id/product_name")
+    vendor = read_file_lower("/sys/class/dmi/id/sys_vendor")
+
+    if pname in ("jupiter", "galileo"):
+        return True
+    if "steam deck" in pname:
+        return True
+
+    return False
 class EdenGenerator(Generator):
 
     def getHotkeysContext(self) -> HotkeysContext:
@@ -558,6 +575,10 @@ class EdenGenerator(Generator):
         if not yuzuConfig.has_section("Renderer"):
             yuzuConfig.add_section("Renderer")
 
+        # Extended Dynamic State Fix for V43 ZEN3
+        if is_steamdeck():
+            yuzuConfig.set("Renderer", "extended_dynamic_state", "0")
+            yuzuConfig.set("Renderer", "extended_dynamic_state\\default", "false")
         # Aspect ratio
         if system.isOptSet('yuzu_ratio'):
             yuzuConfig.set("Renderer", "aspect_ratio", system.config["yuzu_ratio"])
