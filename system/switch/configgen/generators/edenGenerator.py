@@ -432,6 +432,7 @@ class EdenGenerator(Generator):
         EdenGenerator.writeYuzuConfig(yuzuConfig, yuzuConfigTemplate, system, playersControllers, sdlversion, emulator)
 
         # Cas spécial : Home Menu
+        rom_nameq = os.path.basename(rom)
         if "_Switch-Home-menu" in rom_nameq:
             commandArray = [
                 "./" + emulator + ".AppImage",
