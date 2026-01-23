@@ -431,7 +431,20 @@ class EdenGenerator(Generator):
 
         EdenGenerator.writeYuzuConfig(yuzuConfig, yuzuConfigTemplate, system, playersControllers, sdlversion, emulator)
 
-        commandArray = ["./"+emulator+".AppImage", "-f",  "-g", rom ]
+        # Cas spécial : Home Menu
+        if "_Switch-Home-menu" in rom_nameq:
+            commandArray = [
+                "./" + emulator + ".AppImage",
+                "-f",
+                "-qlaunch"
+            ]
+        else:
+            commandArray = [
+                "./" + emulator + ".AppImage",
+                "-f",
+                "-g",
+                rom
+            ]
 
         environment = { "DRI_PRIME":"1",
                         "AMD_VULKAN_ICD":"RADV",
