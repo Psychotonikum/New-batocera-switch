@@ -559,7 +559,7 @@ class EdenGenerator(Generator):
             yuzuConfig.set("UI", "Paths\\language", system.config["yuzu_intlanguage"])
             yuzuConfig.set("UI", "Paths\\language\\default", "false")
         else:
-            yuzuConfig.set("UI", "Paths\\language", "en")
+            yuzuConfig.set("UI", "Paths\\language", "fr")
             yuzuConfig.set("UI", "Paths\\language\\default", "true")
 
         # Single Window Mode
@@ -765,7 +765,7 @@ class EdenGenerator(Generator):
             yuzuConfig.set("System", "language_index", system.config["language"])
             yuzuConfig.set("System", "language_index\\default", "false")
         else:
-            yuzuConfig.set("System", "language_index", "1")
+            yuzuConfig.set("System", "language_index", "2")
             yuzuConfig.set("System", "language_index\\default", "true")
 
         # Audio Mode
@@ -781,7 +781,7 @@ class EdenGenerator(Generator):
             yuzuConfig.set("System", "region_index", system.config["region"])
             yuzuConfig.set("System", "region_index\\default", "false")
         else:
-            yuzuConfig.set("System", "region_index", "1")
+            yuzuConfig.set("System", "region_index", "2")
             yuzuConfig.set("System", "region_index\\default", "true")
 
         # Dock Mode
