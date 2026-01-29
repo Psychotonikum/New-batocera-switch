@@ -27,6 +27,7 @@ from datetime import datetime
 from evdev import InputDevice, ecodes
 
 os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/configgen/sdl2/"
+os.environ["PATH"] = "/userdata/system/switch/extra/xdgfix:" + os.environ.get("PATH", "")
 
 import sdl2
 from sdl2 import joystick
@@ -417,13 +418,10 @@ class EdenGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system/save"))
 
         # Yuzu User XDG 
-        if os.path.exists("/userdata/system/switch/extra/folder-open"):
-            st = os.stat("/userdata/system/switch/extra/folder-open")
-            os.chmod("/userdata/system/switch/extra/folder-open", st.st_mode | stat.S_IEXEC)
-        ensure_symlink(
-            "/userdata/system/switch/extra/folder-open",
-            "/usr/bin/xdg-open"
-        )
+        if os.path.exists("/userdata/system/switch/extra/xdgfix/folder-open"):
+            st = os.stat("/userdata/system/switch/extra/xdgfix/folder-open")
+            os.chmod("/userdata/system/switch/extra/xdgfix/folder-open", st.st_mode | stat.S_IEXEC)
+
         # YUZU USER SAVE
         ensure_symlink(
             "/userdata/saves/switch/eden_citron/save/save_user",

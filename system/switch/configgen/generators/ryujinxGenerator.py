@@ -23,6 +23,7 @@ from configgen.utils.configparser import CaseSensitiveRawConfigParser
 from configgen.input import Input, InputDict, InputMapping
 
 os.environ["PYSDL2_DLL_PATH"] = "/userdata/system/switch/configgen/sdl2/"
+os.environ["PATH"] = "/userdata/system/switch/extra/xdgfix:" + os.environ.get("PATH", "")
 
 import sdl2
 from sdl2 import joystick
@@ -258,13 +259,9 @@ class RyujinxGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/mods"))
 
         # Ryujinx User XDG 
-        if os.path.exists("/userdata/system/switch/extra/folder-open"):
-            st = os.stat("/userdata/system/switch/extra/folder-open")
-            os.chmod("/userdata/system/switch/extra/folder-open", st.st_mode | stat.S_IEXEC)
-        ensure_symlink(
-            "/userdata/system/switch/extra/folder-open",
-            "/usr/bin/xdg-open"
-        )
+        if os.path.exists("/userdata/system/switch/extra/xdgfix/xdg-open"):
+            st = os.stat("/userdata/system/switch/extra/xdgfix/xdg-open")
+            os.chmod("/userdata/system/switch/extra/xdgfix/xdg-open", st.st_mode | stat.S_IEXEC)
 
     # #Link Ryujinx key folder
         # #KEY-------
