@@ -416,6 +416,11 @@ class EdenGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/switch/eden_citron/mods"))
         mkdir_if_not_exists(Path("/userdata/system/configs/yuzu/nand/system/save"))
 
+        # Yuzu User XDG 
+        ensure_symlink(
+            "/userdata/system/switch/extra/folder-open",
+            "/usr/bin/xdg-open"
+        )
         # YUZU USER SAVE
         ensure_symlink(
             "/userdata/saves/switch/eden_citron/save/save_user",

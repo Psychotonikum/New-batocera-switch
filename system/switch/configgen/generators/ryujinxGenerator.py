@@ -41,6 +41,17 @@ def getCurrentCard() -> str | None:
     for val in out.decode().splitlines():
         return val # return the first line
 
+def ensure_symlink(target, link_path):
+    if os.path.exists(link_path):
+        if not os.path.islink(link_path):
+            shutil.rmtree(link_path)
+            os.symlink(target, link_path)
+        else:
+            if os.readlink(link_path) != target:
+                os.unlink(link_path)
+                os.symlink(target, link_path)
+    else:
+        os.symlink(target, link_path)
 def sdlmapping_to_controller(mapping, guid):
 
     sdl_to_batoinputmapping = {
@@ -239,6 +250,12 @@ class RyujinxGenerator(Generator):
         mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/save/save_system"))
         mkdir_if_not_exists(Path("/userdata/saves/switch/ryujinx/mods"))
 
+        # Yuzu User XDG 
+        ensure_symlink(
+            "/userdata/system/switch/bin/folder-open",
+            "/usr/bin/xdg-open"
+        )
+
     #Link Ryujinx key folder
         #KEY-------
         if os.path.exists("/userdata/system/configs/Ryujinx/system"):
@@ -312,7 +329,7 @@ class RyujinxGenerator(Generator):
                         "SDL_JOYSTICK_HIDAPI": "1",
                         "SDL_JOYSTICK_HIDAPI_XBOX": "0",
                         "SDL_JOYSTICK_HIDAPI_STEAMDECK" : "0",
-                        "SDL_JOYSTICK_HIDAPI_PS4": "0",
+                        "SDL_JOYSTICK_HIDAPI_PS4" : "0",
                         "SDL_JOYSTICK_HIDAPI_PS5" : "0",
                         "SDL_JOYSTICK_HIDAPI_SWITCH" : "0",
                         "SDL_GAMECONTROLLERCONFIG": sdl_mapping,
