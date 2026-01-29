@@ -35,6 +35,13 @@ if TYPE_CHECKING:
 
 subprocess.run(["batocera-mouse", "show"], check=False)
 
+try:
+    # exécute le script et attend la fin
+    subprocess.Popen(["/userdata/system/switch/configgen/generators/ryujinxloadfirmware.sh"], stderr=subprocess.PIPE, shell=True)
+    print("[RYUJINX] Script Bash exécuté avec succès", file=sys.stderr)
+except subprocess.CalledProcessError as e:
+    print("[RYUJINX][ERROR] Le script Bash a échoué :", file=sys.stderr)
+
 def getCurrentCard() -> str | None:
     proc = subprocess.Popen(["/userdata/system/switch/configgen/generators/detectvideo.sh"], stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
@@ -259,19 +266,19 @@ class RyujinxGenerator(Generator):
             "/usr/bin/xdg-open"
         )
 
-    #Link Ryujinx key folder
-        #KEY-------
-        if os.path.exists("/userdata/system/configs/Ryujinx/system"):
-            if not os.path.islink("/userdata/system/configs/Ryujinx/system"):
-                shutil.rmtree("/userdata/system/configs/Ryujinx/system")
-                os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
-            else:
-                current_target = os.readlink("/userdata/system/configs/Ryujinx/system")
-                if current_target != "/userdata/bios/switch/keys":
-                    os.unlink("/userdata/bios/switch/keys")
-                    os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
-        else:
-            os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
+    # #Link Ryujinx key folder
+        # #KEY-------
+        # if os.path.exists("/userdata/system/configs/Ryujinx/system"):
+            # if not os.path.islink("/userdata/system/configs/Ryujinx/system"):
+                # shutil.rmtree("/userdata/system/configs/Ryujinx/system")
+                # os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
+            # else:
+                # current_target = os.readlink("/userdata/system/configs/Ryujinx/system")
+                # if current_target != "/userdata/bios/switch/keys":
+                    # os.unlink("/userdata/bios/switch/keys")
+                    # os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
+        # else:
+            # os.symlink("/userdata/bios/switch/keys", "/userdata/system/configs/Ryujinx/system")
 
     #Link Ryujinx User save/mods folder (bis/user)/(bis/system/save)
         # #USER SAVE (bis/user)-------

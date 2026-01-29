@@ -738,13 +738,24 @@ class EdenGenerator(Generator):
             yuzuConfig.set("Renderer", "fullscreen_mode", "1")
             yuzuConfig.set("Renderer", "fullscreen_mode\\default", "true")
 
-        # Resolution scaler
-        if system.isOptSet('resolution_scale'):
-            yuzuConfig.set("Renderer", "resolution_setup", system.config["resolution_scale"])
-            yuzuConfig.set("Renderer", "resolution_setup\\default", "false")
-        else:
-            yuzuConfig.set("Renderer", "resolution_setup", "2")
-            yuzuConfig.set("Renderer", "resolution_setup\\default", "true")
+        if emulator == "citron-emu":
+            # Resolution scaler
+            if system.isOptSet('citron_resolution_scale'):
+                print ("Use Resolution Scale for Citron:",system.config["citron_resolution_scale"], file=sys.stderr)
+                yuzuConfig.set("Renderer", "resolution_setup", system.config["citron_resolution_scale"])
+                yuzuConfig.set("Renderer", "resolution_setup\\default", "false")
+            else:
+                yuzuConfig.set("Renderer", "resolution_setup", "2")
+                yuzuConfig.set("Renderer", "resolution_setup\\default", "true")
+        else:        
+            # Resolution scaler
+            if system.isOptSet('resolution_scale'):
+                print ("Use Resolution Scale for Eden :",system.config["resolution_scale"], file=sys.stderr)
+                yuzuConfig.set("Renderer", "resolution_setup", system.config["resolution_scale"])
+                yuzuConfig.set("Renderer", "resolution_setup\\default", "false")
+            else:
+                yuzuConfig.set("Renderer", "resolution_setup", "2")
+                yuzuConfig.set("Renderer", "resolution_setup\\default", "true")
 
         # Scaling filter
         if system.isOptSet('scale_filter'):
