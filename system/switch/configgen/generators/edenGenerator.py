@@ -566,11 +566,7 @@ class EdenGenerator(Generator):
         if not yuzuConfig.has_section("UI"):
             yuzuConfig.add_section("UI")
 
-        if system.isOptSet('yuzu_enable_discord_presence'):
-            yuzuConfig.set("UI", "enable_discord_presence", system.config["yuzu_enable_discord_presence"])
-        else:
-            yuzuConfig.set("UI", "enable_discord_presence", "false")
-
+        yuzuConfig.set("UI", "enable_discord_presence", "false")
         yuzuConfig.set("UI", "enable_discord_presence\\default", "false")
 
         yuzuConfig.set("UI", "check_for_updates_on_start", "false")
